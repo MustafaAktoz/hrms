@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import kodlama.io.hrms.business.abstracts.JobPositionService;
 import kodlama.io.hrms.core.utilities.results.DataResult;
 import kodlama.io.hrms.core.utilities.results.Result;
@@ -23,7 +24,7 @@ public class JobPositionsController {
 	}
 	
 	@GetMapping("add")
-	public Result add(JobPosition jobPosition){
+	public Result add(@RequestBody JobPosition jobPosition){
 		 return jobPositionService.add(jobPosition);
 	}
 	

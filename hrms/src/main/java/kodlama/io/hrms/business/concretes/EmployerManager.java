@@ -37,17 +37,17 @@ public class EmployerManager implements EmployerService {
 	@Override
 	public Result add(Employer employer) {
 		
-		var emailCheckResult = emailCheckService.check(employer.getEmail());
-		if(!emailCheckResult.isSuccess()) return emailCheckResult;
-		
-		var employerCheckResult = hrmsEmployerCheckService.check(employer);
-		if(!employerCheckResult.isSuccess()) return employerCheckResult;
-		
 		var result = BusinessRules.Run(
 				tempValidationRules(employer),
 				userService.checkIfEmailAlreadyExists(employer.getEmail()));
 		if(!result.isSuccess()) return result;
 		
+		var emailCheckResult = emailCheckService.check(employer.getEmail());
+		if(!emailCheckResult.isSuccess()) return emailCheckResult;
+		
+		var employerCheckResult = hrmsEmployerCheckService.check(employer);
+		if(!employerCheckResult.isSuccess()) return employerCheckResult;
+
 		employerDao.save(employer);
 		return new SuccessResult(Messages.ADDED);
 	}

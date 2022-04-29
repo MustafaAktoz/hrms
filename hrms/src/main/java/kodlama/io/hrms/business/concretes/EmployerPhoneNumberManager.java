@@ -34,5 +34,4 @@ public class EmployerPhoneNumberManager implements EmployerPhoneNumberService {
 		var result=employerPhoneNumberDao.findAll();
 		return new SuccessDataResult<List<EmployerPhoneNumber>>(result, Messages.LISTED);
 	}
-
 }

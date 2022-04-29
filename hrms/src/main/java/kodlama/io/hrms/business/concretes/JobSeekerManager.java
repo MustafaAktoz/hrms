@@ -38,17 +38,17 @@ public class JobSeekerManager implements JobSeekerService {
 	@Override
 	public Result add(JobSeeker jobSeeker) {
 		
-		var personCheckResult=personCheckService.check(new Person(jobSeeker.getFirstName(),jobSeeker.getLastName(),jobSeeker.getNationalityIdentity(),jobSeeker.getYearOfBirth()));
-		if(!personCheckResult.isSuccess()) return personCheckResult;
-		
-		var emailCheckResult=emailCheckService.check(jobSeeker.getEmail());
-		if(!emailCheckResult.isSuccess()) return emailCheckResult;
-		
 		var result = BusinessRules.Run(
 				tempValidationRules(jobSeeker),
 				userService.checkIfEmailAlreadyExists(jobSeeker.getEmail()),
 				checkIfNationalityIdentityAlreadyExists(jobSeeker.getNationalityIdentity()));
 		if(!result.isSuccess()) return result;
+		
+		var personCheckResult=personCheckService.check(new Person(jobSeeker.getFirstName(),jobSeeker.getLastName(),jobSeeker.getNationalityIdentity(),jobSeeker.getYearOfBirth()));
+		if(!personCheckResult.isSuccess()) return personCheckResult;
+		
+		var emailCheckResult=emailCheckService.check(jobSeeker.getEmail());
+		if(!emailCheckResult.isSuccess()) return emailCheckResult;
 		
 		jobSeekerDao.save(jobSeeker);
 		return new SuccessResult(Messages.ADDED);
