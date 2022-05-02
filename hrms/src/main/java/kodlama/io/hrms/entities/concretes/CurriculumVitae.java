@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -32,8 +34,9 @@ public class CurriculumVitae {
 	private int id;
 	
 	@NotNull
-	@Column(name="job_seeker_id")
-	private int jobSeekerId;
+	@ManyToOne
+	@JoinColumn(name="job_seeker_id")
+	private JobSeeker jobSeeker;
 	
 	@NotBlank
 	@NotNull
