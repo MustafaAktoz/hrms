@@ -1,17 +1,16 @@
 package kodlama.io.hrms.api.controllers;
 
-import java.util.List;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import kodlama.io.hrms.business.abstracts.EmployerService;
-import kodlama.io.hrms.core.utilities.results.DataResult;
-import kodlama.io.hrms.core.utilities.results.Result;
 import kodlama.io.hrms.entities.concretes.Employer;
 
 @RestController
@@ -25,12 +24,19 @@ public class EmployersController {
 	}
 	
 	@PostMapping("add")
-	public Result add(@RequestBody Employer employer) {
-		return employerService.add(employer);
+	public ResponseEntity<?> add(@Valid @RequestBody Employer employer) {
+		var result = employerService.add(employer);
+		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping("getAll")
-	public DataResult<List<Employer>> getAll(){
-		return employerService.getAll();
+	public ResponseEntity<?> getAll(){
+		var result = employerService.getAll();
+		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
+		
 	}
 }

@@ -39,7 +39,6 @@ public class JobSeekerManager implements JobSeekerService {
 	public Result add(JobSeeker jobSeeker) {
 		
 		var result = BusinessRules.Run(
-				tempValidationRules(jobSeeker),
 				userService.checkIfEmailAlreadyExists(jobSeeker.getEmail()),
 				checkIfNationalityIdentityAlreadyExists(jobSeeker.getNationalityIdentity()));
 		if(!result.isSuccess()) return result;
@@ -64,17 +63,6 @@ public class JobSeekerManager implements JobSeekerService {
 	private Result checkIfNationalityIdentityAlreadyExists(String nationalityIdentity) {
 		var result = jobSeekerDao.getByNationalityIdentity(nationalityIdentity);
 		if(result!=null) return new ErrorResult(Messages.NATIONALITY_IDENTITY_ALREADY_EXIST);
-		
-		return new SuccessResult();
-	}
-	
-	private Result tempValidationRules(JobSeeker jobSeeker) {
-		if(jobSeeker.getEmail()==null) return new ErrorResult("Email boş olamaz");
-		if(jobSeeker.getFirstName()==null) return new ErrorResult("İsim boş olamaz");
-		if(jobSeeker.getLastName()==null) return new ErrorResult("Soyisim boş olamaz");
-		if(jobSeeker.getNationalityIdentity()==null) return new ErrorResult("TC no boş olamaz");
-		if(jobSeeker.getYearOfBirth()==0) return new ErrorResult("Doğum yılı boş olamaz");
-		if(jobSeeker.getPassword()==null) return new ErrorResult("Şifre boş olamaz");
 		
 		return new SuccessResult();
 	}

@@ -11,4 +11,6 @@ public class Messages {
 	public static final String NATIONALITY_IDENTITY_ALREADY_EXIST = "TC no zaten kayıtlı";
 	public static final String NAME_ALREADY_EXIST = "Bu isimde bir kayıt zaten var";
 	public static final String CHECK_YOUR_CREDENTIALS = "Kimlik bilgilerinizi kontrol ediniz";
+	
+	public static final String CONTINUES = "Devam ediyor...";
 }

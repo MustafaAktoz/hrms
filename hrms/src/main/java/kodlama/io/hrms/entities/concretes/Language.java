@@ -1,5 +1,7 @@
 package kodlama.io.hrms.entities.concretes;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,20 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="employer_phone_numbers")
-public class EmployerPhoneNumber {
-
+@Table(name="languages")
+public class Language {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -29,11 +32,17 @@ public class EmployerPhoneNumber {
 	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name="employer_user_id")
-	private Employer employer;
+	@JoinColumn(name="curriculum_vitae_id")
+	private CurriculumVitae curriculumVitae;
 	
-	@NotBlank
 	@NotNull
-	@Column(name="phone_number")
-	private String phoneNumber;
+	@NotBlank
+	@Column(name="name")
+	private String name;
+	
+	@NotNull
+	@Min(1)
+	@Max(5)
+	@Column(name="level")
+	private int level;
 }

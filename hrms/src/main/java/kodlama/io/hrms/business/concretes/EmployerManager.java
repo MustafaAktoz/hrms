@@ -12,7 +12,6 @@ import kodlama.io.hrms.business.utilities.check.employer.abstracts.HrmsEmployerC
 import kodlama.io.hrms.core.utilities.business.BusinessRules;
 import kodlama.io.hrms.core.utilities.checks.email.abstracts.EmailCheckService;
 import kodlama.io.hrms.core.utilities.results.DataResult;
-import kodlama.io.hrms.core.utilities.results.ErrorResult;
 import kodlama.io.hrms.core.utilities.results.Result;
 import kodlama.io.hrms.core.utilities.results.SuccessDataResult;
 import kodlama.io.hrms.core.utilities.results.SuccessResult;
@@ -38,7 +37,6 @@ public class EmployerManager implements EmployerService {
 	public Result add(Employer employer) {
 		
 		var result = BusinessRules.Run(
-				tempValidationRules(employer),
 				userService.checkIfEmailAlreadyExists(employer.getEmail()));
 		if(!result.isSuccess()) return result;
 		
@@ -56,15 +54,5 @@ public class EmployerManager implements EmployerService {
 	public DataResult<List<Employer>> getAll() {
 		var result = employerDao.findAll();
 		return new SuccessDataResult<List<Employer>>(result,Messages.LISTED);
-	}
-	
-
-	private Result tempValidationRules(Employer employer) {
-		if(employer.getCompanyName()==null)return new ErrorResult("Şirket adı boş olamaz");
-		if(employer.getWebAddress()==null)return new ErrorResult("Web adresi boş olamaz");
-		if(employer.getEmail()==null)return new ErrorResult("Email boş olamaz");
-		if(employer.getPassword()==null)return new ErrorResult("Şifre boş olamaz");
-		
-		return new SuccessResult();
 	}
 }

@@ -1,21 +1,20 @@
 package kodlama.io.hrms.api.controllers;
 
 import java.time.LocalDate;
-import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import kodlama.io.hrms.business.abstracts.JobAdvertisementService;
-import kodlama.io.hrms.core.utilities.results.DataResult;
-import kodlama.io.hrms.core.utilities.results.Result;
 import kodlama.io.hrms.entities.concretes.JobAdvertisement;
-import kodlama.io.hrms.entities.dtos.JobAdvertisementDetailDto;
 import kodlama.io.hrms.entities.dtos.UpdateStatusDto;
 
 @RestController
@@ -29,27 +28,42 @@ public class JobAdvertisementsController {
 	}
 	
 	@PostMapping("add")
-	public Result add(@RequestBody JobAdvertisement jobAdvertisement) {
-		return jobAdvertisementService.add(jobAdvertisement);
+	public ResponseEntity<?> add(@Valid @RequestBody JobAdvertisement jobAdvertisement) {
+		var result = jobAdvertisementService.add(jobAdvertisement);
+		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
 	}
 	
 	@PostMapping("updateStatus")
-	public Result updateStatus(@RequestBody UpdateStatusDto updateStatusDto) {
-		return jobAdvertisementService.updateStatus(updateStatusDto);
+	public ResponseEntity<?> updateStatus(@Valid @RequestBody UpdateStatusDto updateStatusDto) {
+		var result = jobAdvertisementService.updateStatus(updateStatusDto);
+		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping("getDetailsByStatus")
-	public DataResult<List<JobAdvertisementDetailDto>> getDetailsByStatus(@RequestParam boolean status) {
-		return jobAdvertisementService.getDetailsByStatus(status);
+	public ResponseEntity<?> getDetailsByStatus(@RequestParam boolean status) {
+		var result = jobAdvertisementService.getDetailsByStatus(status);
+		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping("getActiveDetailsByDate")
-	public DataResult<List<JobAdvertisementDetailDto>> getActiveDetailsByDate(@RequestParam LocalDate date) {
-		return jobAdvertisementService.getActiveDetailsByDate(date);
+	public ResponseEntity<?> getActiveDetailsByDate(@RequestParam LocalDate date) {
+		var result = jobAdvertisementService.getActiveDetailsByDate(date);
+		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping("getActiveDetailsByEmployerUserId")
-	public DataResult<List<JobAdvertisementDetailDto>> getActiveDetailsByEmployerUserId(@RequestParam int employerUserId) {
-		return jobAdvertisementService.getActiveDetailsByEmployerUserId(employerUserId);
+	public ResponseEntity<?> getActiveDetailsByEmployerUserId(@RequestParam int employerUserId) {
+		var result = jobAdvertisementService.getActiveDetailsByEmployerUserId(employerUserId);
+		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
 	}
 }

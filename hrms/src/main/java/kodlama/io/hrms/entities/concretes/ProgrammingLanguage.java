@@ -19,9 +19,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="employer_phone_numbers")
-public class EmployerPhoneNumber {
-
+@Table(name="programmingLanguages")
+public class ProgrammingLanguage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -29,11 +28,11 @@ public class EmployerPhoneNumber {
 	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name="employer_user_id")
-	private Employer employer;
+	@JoinColumn(name="curriculum_vitae_id")
+	private CurriculumVitae curriculumVitae;
 	
-	@NotBlank
 	@NotNull
-	@Column(name="phone_number")
-	private String phoneNumber;
+	@NotBlank
+	@Column(name="name")
+	private String name;
 }

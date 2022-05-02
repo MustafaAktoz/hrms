@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 
 import kodlama.io.hrms.business.abstracts.UserService;
 import kodlama.io.hrms.business.constants.Messages;
+import kodlama.io.hrms.core.dataAccess.abstracts.UserDao;
 import kodlama.io.hrms.core.utilities.results.ErrorResult;
 import kodlama.io.hrms.core.utilities.results.Result;
 import kodlama.io.hrms.core.utilities.results.SuccessResult;
-import kodlama.io.hrms.dataAccess.abstracts.UserDao;
 
 @Service
 public class UserManager implements UserService {
