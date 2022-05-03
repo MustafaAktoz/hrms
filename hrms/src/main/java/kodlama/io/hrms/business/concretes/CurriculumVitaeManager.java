@@ -10,6 +10,7 @@ import kodlama.io.hrms.business.abstracts.CurriculumVitaeService;
 import kodlama.io.hrms.business.constants.Messages;
 import kodlama.io.hrms.core.utilities.helpers.file.abstracts.FileHelper;
 import kodlama.io.hrms.core.utilities.results.DataResult;
+import kodlama.io.hrms.core.utilities.results.ErrorResult;
 import kodlama.io.hrms.core.utilities.results.Result;
 import kodlama.io.hrms.core.utilities.results.SuccessDataResult;
 import kodlama.io.hrms.core.utilities.results.SuccessResult;
@@ -29,9 +30,23 @@ public class CurriculumVitaeManager implements CurriculumVitaeService{
 
 	@Override
 	public Result add(CurriculumVitae curriculumVitae, MultipartFile file) {
-		curriculumVitae.setPhotoPath(fileHelper.upload(file));
+		var uploadImageResult = fileHelper.upload(file);
+		if(!uploadImageResult.isSuccess()) return new ErrorResult(uploadImageResult.getMessage());
+		
+		curriculumVitae.setPhotoPath(uploadImageResult.getData());
 		curriculumVitaeDao.save(curriculumVitae);
 		return new SuccessResult(Messages.ADDED);
+	}
+
+	@Override
+	public Result delete(CurriculumVitae curriculumVitae) {
+		var result = curriculumVitaeDao.getById(curriculumVitae.getId());
+		
+		var deleteImageResult = fileHelper.delete(result.getPhotoPath());
+		if(!deleteImageResult.isSuccess()) return deleteImageResult;
+		
+		curriculumVitaeDao.delete(result);
+		return new SuccessResult(Messages.DELETED);
 	}
 
 	@Override

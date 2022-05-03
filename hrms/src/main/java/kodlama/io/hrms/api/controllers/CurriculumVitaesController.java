@@ -32,6 +32,15 @@ public class CurriculumVitaesController {
 		
 		return ResponseEntity.ok(result);
 	}
+
+
+	@PostMapping("delete")
+	public ResponseEntity<?> delete(@RequestBody CurriculumVitae curriculumVitae){
+		var result = curriculumVitaeService.delete(curriculumVitae);
+		if(!result.isSuccess()) return ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
+	}
 	
 	@GetMapping("getAll")
 	public ResponseEntity<?> getAll(){

@@ -10,6 +10,7 @@ import kodlama.io.hrms.entities.concretes.CurriculumVitae;
 
 public interface CurriculumVitaeService {
 	Result add(CurriculumVitae curriculumVitae, MultipartFile file);
+	Result delete(CurriculumVitae curriculumVitae);
 	DataResult<List<CurriculumVitae>> getAll();
 	DataResult<List<CurriculumVitae>> getByJobSeekerId(int jobSeekerId);
 }
