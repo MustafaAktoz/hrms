@@ -36,8 +36,7 @@ public class EmployerManager implements EmployerService {
 	@Override
 	public Result add(Employer employer) {
 		
-		var result = BusinessRules.Run(
-				userService.checkIfEmailAlreadyExists(employer.getEmail()));
+		var result = BusinessRules.Run(userService.checkIfEmailAlreadyExists(employer.getEmail()));
 		if(!result.isSuccess()) return result;
 		
 		var emailCheckResult = emailCheckService.check(employer.getEmail());

@@ -30,7 +30,6 @@ public class CloudinaryImageFileHelperAdapter implements FileHelper{
 		try {
 			var uploadResult = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());
 			String imagePath = uploadResult.get("url").toString();
-			System.out.println(uploadResult.get("public_id"));
 			return new SuccessDataResult<String>(imagePath, Messages.ImageUploded);
 		} catch (Exception e) {
 			return new ErrorDataResult<String>(null, Messages.ImageFailedToLoad);

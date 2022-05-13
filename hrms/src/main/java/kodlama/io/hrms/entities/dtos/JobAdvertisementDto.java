@@ -10,10 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobAdvertisementDetailDto implements Dto {
+public class JobAdvertisementDto implements Dto {
 	private int id;
 	private String companyName;
 	private String jobPositionName;
+	private String cityName;
 	private int numberOfPositions;
 	private LocalDate date;
 	private LocalDate applicationDeadline;

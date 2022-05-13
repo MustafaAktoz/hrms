@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import kodlama.io.hrms.business.abstracts.JobAdvertisementService;
 import kodlama.io.hrms.entities.concretes.JobAdvertisement;
 import kodlama.io.hrms.entities.dtos.UpdateStatusDto;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/jobAdvertisements/")
 public class JobAdvertisementsController {
@@ -38,6 +40,30 @@ public class JobAdvertisementsController {
 	@PostMapping("updateStatus")
 	public ResponseEntity<?> updateStatus(@Valid @RequestBody UpdateStatusDto updateStatusDto) {
 		var result = jobAdvertisementService.updateStatus(updateStatusDto);
+		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("getById")
+	public ResponseEntity<?> getById(int id) {
+		var result = jobAdvertisementService.getById(id);
+		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("getAll")
+	public ResponseEntity<?> getAll() {
+		var result = jobAdvertisementService.getAll();
+		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("getDetails")
+	public ResponseEntity<?> getDetails() {
+		var result = jobAdvertisementService.getDetails();
 		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
