@@ -11,6 +11,10 @@ import kodlama.io.hrms.entities.concretes.JobAdvertisement;
 import kodlama.io.hrms.entities.dtos.JobAdvertisementDto;
 
 public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement, Integer>{
+	
+	@Query("from kodlama.io.hrms.entities.concretes.JobAdvertisement ja where ja.id =:id")
+	JobAdvertisement getById(int id);
+	
 	@Query(QueryStrings.JOB_ADVERTISEMENT_DETAIL_DTO_QUERY)
 	List<JobAdvertisementDto> getDetails();
 	

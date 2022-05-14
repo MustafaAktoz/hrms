@@ -32,7 +32,7 @@ public class JobAdvertisementsController {
 	@PostMapping("add")
 	public ResponseEntity<?> add(@Valid @RequestBody JobAdvertisement jobAdvertisement) {
 		var result = jobAdvertisementService.add(jobAdvertisement);
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -40,23 +40,23 @@ public class JobAdvertisementsController {
 	@PostMapping("updateStatus")
 	public ResponseEntity<?> updateStatus(@Valid @RequestBody UpdateStatusDto updateStatusDto) {
 		var result = jobAdvertisementService.updateStatus(updateStatusDto);
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping("getById")
-	public ResponseEntity<?> getById(int id) {
+	public ResponseEntity<?> getById(@RequestParam int id) {
 		var result = jobAdvertisementService.getById(id);
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
-		
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
+			
 		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping("getAll")
 	public ResponseEntity<?> getAll() {
 		var result = jobAdvertisementService.getAll();
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -64,7 +64,7 @@ public class JobAdvertisementsController {
 	@GetMapping("getDetails")
 	public ResponseEntity<?> getDetails() {
 		var result = jobAdvertisementService.getDetails();
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -72,7 +72,7 @@ public class JobAdvertisementsController {
 	@GetMapping("getDetailsByStatus")
 	public ResponseEntity<?> getDetailsByStatus(@RequestParam boolean status) {
 		var result = jobAdvertisementService.getDetailsByStatus(status);
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -80,7 +80,7 @@ public class JobAdvertisementsController {
 	@GetMapping("getActiveDetailsByDate")
 	public ResponseEntity<?> getActiveDetailsByDate(@RequestParam LocalDate date) {
 		var result = jobAdvertisementService.getActiveDetailsByDate(date);
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -88,7 +88,7 @@ public class JobAdvertisementsController {
 	@GetMapping("getActiveDetailsByEmployerUserId")
 	public ResponseEntity<?> getActiveDetailsByEmployerUserId(@RequestParam int employerUserId) {
 		var result = jobAdvertisementService.getActiveDetailsByEmployerUserId(employerUserId);
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}

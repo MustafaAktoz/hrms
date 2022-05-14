@@ -26,7 +26,7 @@ public class JobPositionsController {
 	@PostMapping("add")
 	public ResponseEntity<?> add(@Valid @RequestBody JobPosition jobPosition){
 		var result = jobPositionService.add(jobPosition);
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 			
 		return ResponseEntity.ok(result);
 	}
@@ -34,7 +34,7 @@ public class JobPositionsController {
 	@GetMapping("getAll")
 	public ResponseEntity<?> getAll(){
 		var result = jobPositionService.getAll();
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 			
 		return ResponseEntity.ok(result);
 	}

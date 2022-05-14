@@ -26,7 +26,7 @@ public class CitiesController {
 	@PostMapping("add")
 	public ResponseEntity<?> add(@Valid @RequestBody City city) {
 		var result = cityService.add(city);
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -34,7 +34,7 @@ public class CitiesController {
 	@GetMapping("getAll")
 	public ResponseEntity<?> getAll(){
 		var result = cityService.getAll();
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}

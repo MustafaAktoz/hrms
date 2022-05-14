@@ -26,7 +26,7 @@ public class EmployersController {
 	@PostMapping("add")
 	public ResponseEntity<?> add(@Valid @RequestBody Employer employer) {
 		var result = employerService.add(employer);
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -34,7 +34,7 @@ public class EmployersController {
 	@GetMapping("getAll")
 	public ResponseEntity<?> getAll(){
 		var result = employerService.getAll();
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 		

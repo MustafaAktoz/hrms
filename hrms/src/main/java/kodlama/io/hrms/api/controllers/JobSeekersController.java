@@ -26,7 +26,7 @@ public class JobSeekersController {
 	@PostMapping("add")
 	public ResponseEntity<?> add(@Valid @RequestBody JobSeeker jobSeeker) {
 		var result = jobSeekerService.add(jobSeeker);
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -34,7 +34,7 @@ public class JobSeekersController {
 	@GetMapping("getAll")
 	public ResponseEntity<?> getAll(){
 		var result = jobSeekerService.getAll();
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}

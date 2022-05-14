@@ -57,8 +57,7 @@ public class LanguagesController {
 			validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
 		}
 		
-		ErrorDataResult<Object> errors 
-		= new ErrorDataResult<Object>(validationErrors,"Doğrulama hataları");
+		ErrorDataResult<Object> errors = new ErrorDataResult<Object>(validationErrors,"Doğrulama hataları");
 		return errors;
 	}
 }

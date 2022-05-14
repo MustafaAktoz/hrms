@@ -26,7 +26,7 @@ public class EmployerPhoneNumbersController {
 	@PostMapping("add")
 	public ResponseEntity<?> add(@Valid @RequestBody EmployerPhoneNumber employerPhoneNumber) {
 		var result = employerPhoneNumberService.add(employerPhoneNumber);
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -34,7 +34,7 @@ public class EmployerPhoneNumbersController {
 	@GetMapping("getAll")
 	public ResponseEntity<?> getAll() {
 		var result = employerPhoneNumberService.getAll();
-		if(!result.isSuccess()) ResponseEntity.badRequest().body(result);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
 	}
