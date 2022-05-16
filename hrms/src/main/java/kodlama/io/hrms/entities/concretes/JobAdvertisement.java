@@ -43,13 +43,22 @@ public class JobAdvertisement {
 	@ManyToOne
 	@JoinColumn(name = "city_id")
 	private City city;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "workingType_id")
+	private WorkingTime workingType;
+	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "workingTime_id")
+	private WorkingTime workingTime;
 	
 	@NotBlank
 	@NotNull
 	@Column(name="description")
 	private String description;
 
-	@NotNull
 	@Column(name="date")
 	private LocalDate date;
 	
@@ -65,8 +74,11 @@ public class JobAdvertisement {
 	@NotNull
 	@Column(name="number_of_positions")
 	private int numberOfPositions;
-	
+
 	@NotNull
 	@Column(name="status")
 	private boolean status;
+	
+	@Column(name="confirmation")
+	private boolean confirmation;	
 }

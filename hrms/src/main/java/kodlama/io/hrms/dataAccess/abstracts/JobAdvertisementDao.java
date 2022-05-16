@@ -8,22 +8,34 @@ import org.springframework.data.jpa.repository.Query;
 
 import kodlama.io.hrms.dataAccess.constants.QueryStrings;
 import kodlama.io.hrms.entities.concretes.JobAdvertisement;
-import kodlama.io.hrms.entities.dtos.JobAdvertisementDto;
+import kodlama.io.hrms.entities.dtos.JobAdvertisementDetailDto;
 
 public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement, Integer>{
-	
-	@Query("from kodlama.io.hrms.entities.concretes.JobAdvertisement ja where ja.id =:id")
+
+	@Query("From JobAdvertisement where id =:id")
 	JobAdvertisement getById(int id);
 	
+	@Query(QueryStrings.JOB_ADVERTISEMENT_DETAIL_DTO_QUERY + "where ja.id =:id")
+	JobAdvertisementDetailDto getDetailById(int id);
+	
 	@Query(QueryStrings.JOB_ADVERTISEMENT_DETAIL_DTO_QUERY)
-	List<JobAdvertisementDto> getDetails();
-	
+	List<JobAdvertisementDetailDto> getDetails();
+
 	@Query(QueryStrings.JOB_ADVERTISEMENT_DETAIL_DTO_QUERY + "where ja.status =:status")
-	List<JobAdvertisementDto> getDetailsByStatus(boolean status);
+	List<JobAdvertisementDetailDto> getDetailsByStatus(boolean status);
 	
-	@Query(QueryStrings.JOB_ADVERTISEMENT_DETAIL_DTO_QUERY + "where ja.status = true and ja.date =:date")
-	List<JobAdvertisementDto> getActiveDetailsByDate(LocalDate date);
+	@Query(QueryStrings.JOB_ADVERTISEMENT_DETAIL_DTO_QUERY + "where ja.confirmation =:confirmation")
+	List<JobAdvertisementDetailDto> getDetailsByConfirmation(boolean confirmation);
+
+	@Query(QueryStrings.JOB_ADVERTISEMENT_DETAIL_DTO_QUERY + "where ja.status = true and ja.confirmation = true")
+	List<JobAdvertisementDetailDto> getActiveDetails();
 	
-	@Query(QueryStrings.JOB_ADVERTISEMENT_DETAIL_DTO_QUERY + "where ja.status = true and ja.employer.id =:employerUserId")
-	List<JobAdvertisementDto> getActiveDetailsByEmployerUserId(int employerUserId);
+	@Query(QueryStrings.JOB_ADVERTISEMENT_DETAIL_DTO_QUERY + "where ja.status = false or ja.confirmation = false")
+	List<JobAdvertisementDetailDto> getPassiveDetails();
+	
+	@Query(QueryStrings.JOB_ADVERTISEMENT_DETAIL_DTO_QUERY + "where ja.status = true and ja.confirmation = true and ja.date =:date")
+	List<JobAdvertisementDetailDto> getActiveDetailsByDate(LocalDate date);
+	
+	@Query(QueryStrings.JOB_ADVERTISEMENT_DETAIL_DTO_QUERY + "where ja.status = true and ja.confirmation = true and ja.employer.id =:employerUserId")
+	List<JobAdvertisementDetailDto> getActiveDetailsByEmployerUserId(int employerUserId);
 }

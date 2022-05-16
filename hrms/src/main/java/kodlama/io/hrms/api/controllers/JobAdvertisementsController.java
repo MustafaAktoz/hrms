@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import kodlama.io.hrms.business.abstracts.JobAdvertisementService;
 import kodlama.io.hrms.entities.concretes.JobAdvertisement;
+import kodlama.io.hrms.entities.dtos.UpdateConfirmationDto;
 import kodlama.io.hrms.entities.dtos.UpdateStatusDto;
 
 @CrossOrigin
@@ -32,6 +33,7 @@ public class JobAdvertisementsController {
 	@PostMapping("add")
 	public ResponseEntity<?> add(@Valid @RequestBody JobAdvertisement jobAdvertisement) {
 		var result = jobAdvertisementService.add(jobAdvertisement);
+		System.out.println(result.getMessage());
 		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
@@ -40,6 +42,14 @@ public class JobAdvertisementsController {
 	@PostMapping("updateStatus")
 	public ResponseEntity<?> updateStatus(@Valid @RequestBody UpdateStatusDto updateStatusDto) {
 		var result = jobAdvertisementService.updateStatus(updateStatusDto);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping("updateConfirmation")
+	public ResponseEntity<?> updateConfirmation(@Valid @RequestBody UpdateConfirmationDto updateConfirmationDto) {
+		var result = jobAdvertisementService.updateConfirmation(updateConfirmationDto);
 		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);
@@ -69,9 +79,33 @@ public class JobAdvertisementsController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@GetMapping("getDetailsByStatus")
-	public ResponseEntity<?> getDetailsByStatus(@RequestParam boolean status) {
-		var result = jobAdvertisementService.getDetailsByStatus(status);
+	@GetMapping("getDetailById")
+	public ResponseEntity<?> getDetailById(@RequestParam int id) {
+		var result = jobAdvertisementService.getDetailById(id);
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("getActiveDetails")
+	public ResponseEntity<?> getActiveDetails() {
+		var result = jobAdvertisementService.getActiveDetails();
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("getPassiveDetails")
+	public ResponseEntity<?> getPassiveDetails() {
+		var result = jobAdvertisementService.getPassiveDetails();
+		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("getUnconfirmedDetails")
+	public ResponseEntity<?> getUnconfirmedDetails() {
+		var result = jobAdvertisementService.getUnconfirmedDetails();
 		if(!result.isSuccess())return ResponseEntity.badRequest().body(result);
 		
 		return ResponseEntity.ok(result);

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import kodlama.io.hrms.business.abstracts.EmployerService;
 import kodlama.io.hrms.business.abstracts.UserService;
 import kodlama.io.hrms.business.constants.Messages;
-import kodlama.io.hrms.business.utilities.check.employer.abstracts.HrmsEmployerCheckService;
 import kodlama.io.hrms.core.utilities.business.BusinessRules;
 import kodlama.io.hrms.core.utilities.checks.email.abstracts.EmailCheckService;
 import kodlama.io.hrms.core.utilities.results.DataResult;
@@ -24,26 +23,22 @@ public class EmployerManager implements EmployerService {
 	private EmployerDao employerDao;
 	private UserService userService;
 	private EmailCheckService emailCheckService;
-	private HrmsEmployerCheckService hrmsEmployerCheckService;
 	@Autowired
-	public EmployerManager(EmployerDao employerDao,UserService userService,EmailCheckService emailCheckService,HrmsEmployerCheckService hrmsEmployerCheckService) {
+	public EmployerManager(EmployerDao employerDao,UserService userService,EmailCheckService emailCheckService) {
 		this.employerDao = employerDao;
 		this.userService = userService;
 		this.emailCheckService=emailCheckService;
-		this.hrmsEmployerCheckService=hrmsEmployerCheckService;
 	}
 
 	@Override
 	public Result add(Employer employer) {
+		employer.setStatus(false);
 		
 		var result = BusinessRules.Run(userService.checkIfEmailAlreadyExists(employer.getEmail()));
 		if(!result.isSuccess()) return result;
 		
 		var emailCheckResult = emailCheckService.check(employer.getEmail());
 		if(!emailCheckResult.isSuccess()) return emailCheckResult;
-		
-		var employerCheckResult = hrmsEmployerCheckService.check(employer);
-		if(!employerCheckResult.isSuccess()) return employerCheckResult;
 
 		employerDao.save(employer);
 		return new SuccessResult(Messages.ADDED);

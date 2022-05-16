@@ -37,6 +37,7 @@ public class JobSeekerManager implements JobSeekerService {
 
 	@Override
 	public Result add(JobSeeker jobSeeker) {
+		jobSeeker.setStatus(true);
 		
 		var result = BusinessRules.Run(
 				userService.checkIfEmailAlreadyExists(jobSeeker.getEmail()),
