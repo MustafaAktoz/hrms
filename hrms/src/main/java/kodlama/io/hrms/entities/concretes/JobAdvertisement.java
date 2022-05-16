@@ -47,7 +47,7 @@ public class JobAdvertisement {
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "workingType_id")
-	private WorkingTime workingType;
+	private WorkingType workingType;
 	
 	@NotNull
 	@ManyToOne
